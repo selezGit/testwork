@@ -13,10 +13,9 @@ def format_data(raw_data):
     data = {}
     for i in raw_data:
         date_string, time_string = i['@moment'].split(' ')
-        data.setdefault(date_string, [{
-            'time': '-',
-            'value': '-'
-        }]).append({'time': time_string, 'value': i['@value']})
+        data.setdefault(date_string, [{'time': '-', 'value': '-'}]).append(
+            {'time': time_string, 'value': i['@value']}
+        )
 
         if len(data[date_string]) > 2:
             del data[date_string][0]
