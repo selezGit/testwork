@@ -1,4 +1,5 @@
 import os
+
 from openpyxl.styles import PatternFill
 
 BASE_URL = 'https://www.moex.com/export/derivatives/currency-rate.aspx?language=ru'

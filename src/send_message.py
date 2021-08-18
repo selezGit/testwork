@@ -18,9 +18,9 @@ def send_message(colls_count):
     morph = pymorphy2.MorphAnalyzer()
 
     message = EmailMessage()
-    message["From"] = login
-    message["To"] = ",".join([login])
-    message["Subject"] = f'Отчёт'
+    message['From'] = login
+    message['To'] = ','.join([login])
+    message['Subject'] = f'Отчёт'
 
     string = morph.parse('строка')[0]
     normal_word = string.make_agree_with_number(colls_count).word
@@ -31,7 +31,7 @@ def send_message(colls_count):
 
     with open(config.FILE_NAME, 'rb') as f:
         file_data = f.read()
-        message.add_attachment(file_data, maintype="application",
-                               subtype="xlsx", filename=config.FILE_NAME)
+        message.add_attachment(file_data, maintype='application',
+                               subtype='xlsx', filename=config.FILE_NAME)
 
     server.send_message(message)

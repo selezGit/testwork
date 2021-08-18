@@ -68,6 +68,3 @@ def update_data():
     wb.save(config.FILE_NAME)
 
     return index+1
-
-
-
