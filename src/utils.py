@@ -16,6 +16,9 @@ def get_dates() -> Tuple[str, str]:
 
 
 def format_data(raw_data: List[dict]) -> dict:
+    if (not raw_data) or (not isinstance(raw_data, list)):
+        return
+
     cleared_dict = {}
     for raw_dict in raw_data:
         date_string, time_string = raw_dict['@moment'].split(' ')

@@ -10,6 +10,7 @@ from src.utils import format_data, get_dates
 def start_app() -> None:
     now, last_month = get_dates()
     for offset, exchange in enumerate(config.PARSE_LIST):
+        print(now, last_month)
         urn = (
             f'&currency={exchange}&moment_start={last_month}&moment_end={now}'
         )
