@@ -1,26 +1,17 @@
-from openpyxl import Workbook, load_workbook
+from openpyxl import worksheet
 from openpyxl.utils import get_column_letter
 
 from src.core import config
+from src.utils import connect_to_wb
 
 
+@connect_to_wb
 def save_to_excel(
+    ws: worksheet,
     cleared_dict: dict,
     offset: int,
     exchange: str,
 ) -> None:
-    try:
-        wb = load_workbook(config.FILE_NAME)
-    except FileNotFoundError:
-        wb = Workbook()
-
-    ws = wb.active
-
-    if 'EUR' in exchange:
-        currency = f'€{config.NUMBER_FORMAT}'
-    else:
-        currency = f'${config.NUMBER_FORMAT}'
-
     ws.cell(
         column=offset + 1,
         row=1,
@@ -29,7 +20,7 @@ def save_to_excel(
     ws.cell(
         column=offset + 2,
         row=1,
-        value='Курс',
+        value=f'Курс {exchange}',
     ).style = config.HEADER_STYLE
 
     ws.cell(
@@ -42,15 +33,15 @@ def save_to_excel(
         try:
             exchange_rate = float(cleared_dict[date][0]['value'])
             difference = exchange_rate - float(cleared_dict[date][1]['value'])
-            color = config.RED if difference <= 0 else config.GREEN
+            color = config.RED_FILL if difference <= 0 else config.GREEN_FILL
         except ValueError:
             exchange_rate = float(cleared_dict[date][1]['value'])
             difference = 0
-            color = config.BASE
+            color = config.BASE_FILL
         except IndexError:
             exchange_rate = float(cleared_dict[date][0]['value'])
             difference = 0
-            color = config.BASE
+            color = config.BASE_FILL
 
         ws.cell(
             column=offset + 1,
@@ -64,23 +55,20 @@ def save_to_excel(
             value=exchange_rate,
         )
         cell_rate.style = config.BASE_STYLE
-        cell_rate.number_format = currency
+        cell_rate.number_format = f'₽{config.NUMBER_FORMAT}'
 
         cell_diff = ws.cell(
             column=offset + 3,
             row=row + 2,
             value=difference,
         )
-        cell_diff.number_format = currency
+        cell_diff.number_format = f'₽{config.NUMBER_FORMAT}'
         cell_diff.border = config.THIN_BORDER
         cell_diff.fill = color
 
-    wb.save(config.FILE_NAME)
 
-
-def update_data() -> int:
-    wb = load_workbook(config.FILE_NAME)
-    ws = wb.active
+@connect_to_wb
+def update_data(ws: worksheet) -> int:
     for index, row in enumerate(ws.iter_rows()):
         if index == 0:
             continue
@@ -105,11 +93,10 @@ def update_data() -> int:
 
     ws.cell(column=7, row=1, value='Средний курс').style = config.HEADER_STYLE
 
-    # авто выравнивание
-    for i in range(1, ws.max_column + 1):
-        ws.column_dimensions[get_column_letter(i)].bestFit = True
-        ws.column_dimensions[get_column_letter(i)].auto_size = True
-
-    wb.save(config.FILE_NAME)
+    for column_cells in ws.columns:
+        length = max(len(str(cell.value) or "") for cell in column_cells)
+        ws.column_dimensions[
+            get_column_letter(column_cells[0].column)
+        ].width = (length * config.RIGHT_INDENT)
 
     return index + 1

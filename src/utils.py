@@ -1,8 +1,12 @@
 from datetime import datetime
-from typing import List, Tuple
+from functools import wraps
+from typing import Any, Callable, List, Tuple
 
 import pymorphy2
 from dateutil.relativedelta import relativedelta
+from openpyxl import Workbook, load_workbook
+
+from src.core import config
 
 
 def get_dates() -> Tuple[str, str]:
@@ -26,3 +30,18 @@ def get_morphy(colls_count: int) -> str:
     morph = pymorphy2.MorphAnalyzer()
     string = morph.parse('строка')[0]
     return string.make_agree_with_number(colls_count).word
+
+
+def connect_to_wb(func: Callable):
+    @wraps(func)
+    def inner(*args: Any, **kwargs: Any):
+        try:
+            wb = load_workbook(config.FILE_NAME)
+        except FileNotFoundError:
+            wb = Workbook()
+        ws = wb.active
+        result = func(ws, *args, **kwargs)
+        wb.save(config.FILE_NAME)
+
+        return result
+    return inner
