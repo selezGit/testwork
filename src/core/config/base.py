@@ -64,6 +64,6 @@ NUMBER_FORMAT = u'#,####0.0000;_(* (-#,###0.0000);_(* -_0_0_)'
 
 # email
 SMTP_SERVER = os.getenv('SMTP_SERVER')
-SMTP_PORT = os.getenv('SMTP_PORT')
+SMTP_PORT = os.getenv('SMTP_PORT', 465)
 EMAIL_LOGIN = os.getenv('EMAIL_LOGIN')
 EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
