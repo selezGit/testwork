@@ -4,7 +4,6 @@ from email.message import EmailMessage
 from src.core import config
 from src.utils import get_morphy
 
-
 login = config.EMAIL_LOGIN
 password = config.EMAIL_PASSWORD
 server = smtplib.SMTP_SSL(config.SMTP_SERVER, config.SMTP_PORT)

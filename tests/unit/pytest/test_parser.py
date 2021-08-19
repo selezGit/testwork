@@ -1,7 +1,7 @@
-import pytest
-
 from src.core import config
 from src.parser import get_data
+
+import pytest
 
 
 @pytest.mark.parametrize(

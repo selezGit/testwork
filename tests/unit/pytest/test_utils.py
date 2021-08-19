@@ -1,7 +1,7 @@
-import pytest
-
 from src.core import config
 from src.utils import format_data, get_morphy
+
+import pytest
 
 
 @pytest.mark.parametrize(
