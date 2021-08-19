@@ -6,7 +6,12 @@ from src.utils import format_data, get_morphy
 
 @pytest.mark.parametrize(
     'colls_count,expected',
-    [(1, 'строка'), (2, 'строки'), (5, 'строк'), (101, 'строка')],
+    [
+        (1, 'строка'),
+        (2, 'строки'),
+        (5, 'строк'),
+        (101, 'строка'),
+    ],
 )
 def test_get_morphy(colls_count, expected):
     assert get_morphy(colls_count) == expected
