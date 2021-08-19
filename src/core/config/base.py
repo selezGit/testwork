@@ -5,7 +5,6 @@ from openpyxl.styles import NamedStyle, PatternFill
 from openpyxl.styles.borders import Border, Side
 from openpyxl.styles.fonts import Font
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = (
     'https://www.moex.com/export/derivatives/currency-rate.aspx?language=ru'
 )
