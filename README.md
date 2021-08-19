@@ -23,9 +23,14 @@ pip install -r requirements.txt
 ![Screenshot](images/sntp-servers.png)
 </p></details>
 
-#### Start script:
+#### Run script:
 ```python
 python3 main.py
+```
+
+#### Run tests:
+```python
+ENVIRONMENT='test' py.test
 ```
 
 <details><summary><b>Task<b/></summary><p>

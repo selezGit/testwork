@@ -94,7 +94,7 @@ def update_data(ws: worksheet) -> int:
     ws.cell(column=7, row=1, value='Средний курс').style = config.HEADER_STYLE
 
     for column_cells in ws.columns:
-        length = max(len(str(cell.value) or "") for cell in column_cells)
+        length = max(len(str(cell.value) or '') for cell in column_cells)
         ws.column_dimensions[
             get_column_letter(column_cells[0].column)
         ].width = (length * config.RIGHT_INDENT)
