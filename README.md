@@ -11,8 +11,11 @@ pip install -r requirements.txt
 #### Set environmetns:
 
 `SMTP_SERVER` - address your smtp email serve
+
 `SMTP_PORT` - your email server port (465 by default)
+
 `EMAIL_LOGIN` - your login to enter the mail
+
 `EMAIL_PASSWORD` - your password to enter the mail
 
 <details><summary>Examples popular SNTP servers</summary><p>
