@@ -4,7 +4,11 @@ from openpyxl.utils import get_column_letter
 from src.core import config
 
 
-def save_to_excel(data, offset, exchange):
+def save_to_excel(
+    cleared_dict: dict,
+    offset: int,
+    exchange: str,
+) -> None:
     try:
         wb = load_workbook(config.FILE_NAME)
     except FileNotFoundError:
@@ -13,9 +17,9 @@ def save_to_excel(data, offset, exchange):
     ws = wb.active
 
     if 'EUR' in exchange:
-        currency = '#,#####0.0000€'
+        currency = f'€{config.NUMBER_FORMAT}'
     else:
-        currency = '#,#####0.0000$'
+        currency = f'${config.NUMBER_FORMAT}'
 
     ws.cell(
         column=offset + 1,
@@ -34,25 +38,39 @@ def save_to_excel(data, offset, exchange):
         value='Изменение',
     ).style = config.HEADER_STYLE
 
-    for row, date in enumerate(data.keys()):
-        exchange_rate = float(data[date][0]['value'])
-        difference = exchange_rate - float(data[date][1]['value'])
+    for row, date in enumerate(cleared_dict.keys()):
+        try:
+            exchange_rate = float(cleared_dict[date][0]['value'])
+            difference = exchange_rate - float(cleared_dict[date][1]['value'])
+            color = config.RED if difference <= 0 else config.GREEN
+        except ValueError:
+            exchange_rate = float(cleared_dict[date][1]['value'])
+            difference = 0
+            color = config.BASE
+        except IndexError:
+            exchange_rate = float(cleared_dict[date][0]['value'])
+            difference = 0
+            color = config.BASE
 
-        color = config.RED if difference <= 0 else config.GREEN
-
-        cell_date = ws.cell(
-            column=offset + 1, row=row + 2, value=date
+        ws.cell(
+            column=offset + 1,
+            row=row + 2,
+            value=date,
         ).style = config.BASE_STYLE
-        cell_date.number_format = currency
 
         cell_rate = ws.cell(
             column=offset + 2,
             row=row + 2,
             value=exchange_rate,
-        ).style = config.BASE_STYLE
+        )
+        cell_rate.style = config.BASE_STYLE
         cell_rate.number_format = currency
 
-        cell_diff = ws.cell(column=offset + 3, row=row + 2, value=difference)
+        cell_diff = ws.cell(
+            column=offset + 3,
+            row=row + 2,
+            value=difference,
+        )
         cell_diff.number_format = currency
         cell_diff.border = config.THIN_BORDER
         cell_diff.fill = color
@@ -60,10 +78,12 @@ def save_to_excel(data, offset, exchange):
     wb.save(config.FILE_NAME)
 
 
-def update_data():
+def update_data() -> int:
     wb = load_workbook(config.FILE_NAME)
     ws = wb.active
     for index, row in enumerate(ws.iter_rows()):
+        if index == 0:
+            continue
         usd, eur = 0, 0
         for cell in row:
             if cell.column == 2:
@@ -72,15 +92,16 @@ def update_data():
                 eur = cell.value
         try:
             mid_market_rate = eur / usd
-        except:
-            mid_market_rate = ''
+        except ZeroDivisionError:
+            mid_market_rate = 0
 
         res_col = ws.cell(
             column=7,
             row=index + 1,
             value=mid_market_rate,
-        ).style = config.BASE_STYLE
-        res_col.number_format = '#,#####0.00000'
+        )
+        res_col.number_format = config.NUMBER_FORMAT
+        res_col.style = config.BASE_STYLE
 
     ws.cell(column=7, row=1, value='Средний курс').style = config.HEADER_STYLE
 

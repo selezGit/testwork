@@ -1,23 +1,28 @@
 from datetime import datetime
+from typing import List, Tuple
 
+import pymorphy2
 from dateutil.relativedelta import relativedelta
 
 
-def get_dates():
+def get_dates() -> Tuple[str, str]:
     current_date = datetime.today()
     past_date = current_date - relativedelta(months=1)
     return current_date.date(), past_date.date()
 
 
-def format_data(raw_data):
-    data = {}
-    for i in raw_data:
-        date_string, time_string = i['@moment'].split(' ')
-        data.setdefault(date_string, [{'time': '-', 'value': '-'}]).append(
-            {'time': time_string, 'value': i['@value']}
+def format_data(raw_data: List[dict]) -> dict:
+    cleared_dict = {}
+    for raw_dict in raw_data:
+        date_string, time_string = raw_dict['@moment'].split(' ')
+        cleared_dict.setdefault(date_string, []).append(
+            {'time': time_string, 'value': raw_dict['@value']}
         )
 
-        if len(data[date_string]) > 2:
-            del data[date_string][0]
+    return cleared_dict
 
-    return data
+
+def get_morphy(colls_count: int) -> str:
+    morph = pymorphy2.MorphAnalyzer()
+    string = morph.parse('строка')[0]
+    return string.make_agree_with_number(colls_count).word
