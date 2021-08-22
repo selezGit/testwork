@@ -10,7 +10,7 @@ pip install -r requirements.txt
 
 #### Set environmetns:
 
-`SMTP_SERVER` - address your smtp email serve
+`SMTP_SERVER` - address your smtp email server
 
 `SMTP_PORT` - your email server port (465 by default)
 
