@@ -4,16 +4,11 @@ from email.message import EmailMessage
 from src.core import config
 from src.utils import get_morphy
 
-login = config.EMAIL_LOGIN
-password = config.EMAIL_PASSWORD
-server = smtplib.SMTP_SSL(config.SMTP_SERVER, config.SMTP_PORT)
-server.login(config.EMAIL_LOGIN, config.EMAIL_PASSWORD)
-
 
 def send_message(colls_count: int) -> None:
     message = EmailMessage()
-    message['From'] = login
-    message['To'] = ','.join([login])
+    message['From'] = config.EMAIL_LOGIN
+    message['To'] = config.SEND_TO
     message['Subject'] = 'Report'
 
     message.set_content(
@@ -32,4 +27,6 @@ def send_message(colls_count: int) -> None:
             filename=config.FILE_NAME,
         )
 
+    server = smtplib.SMTP_SSL(config.SMTP_SERVER, config.SMTP_PORT)
+    server.login(config.EMAIL_LOGIN, config.EMAIL_PASSWORD)
     server.send_message(message)

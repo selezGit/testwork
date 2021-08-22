@@ -26,5 +26,5 @@ def test_get_morphy(colls_count, expected):
         (config.TEST_RAW_DATA, config.TEST_CLEARED_DICT),
     ],
 )
-def test_foramat_data(raw_data, expected):
+def test_format_data(raw_data, expected):
     assert format_data(raw_data) == expected
