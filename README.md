@@ -30,7 +30,7 @@ python3 main.py
 
 #### Run tests:
 ```python
-ENVIRONMENT='test' py.test
+ENVIRONMENT='test' pytest
 ```
 
 <details><summary>Task</summary>
