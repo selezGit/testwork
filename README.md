@@ -18,9 +18,9 @@ pip install -r requirements.txt
 
 `EMAIL_PASSWORD` - your password to enter the mail
 
-<details><summary>Examples popular SNTP servers</summary><p>
+<details><summary>Examples popular SMTP servers</summary><p>
 
-![Screenshot](images/sntp-servers.png)
+![Screenshot](https://shorturl.at/hwFNV)
 </p></details>
 
 #### Run script:
@@ -33,7 +33,7 @@ python3 main.py
 ENVIRONMENT='test' py.test
 ```
 
-<details><summary><b>Task<b/></summary><p>
+<details><summary>Task</summary>
 
 Ниже описано тестовое задание, его необходимо выполнить с помощью средств Python и предоставить результат 20.08
 
@@ -41,4 +41,4 @@ ENVIRONMENT='test' py.test
 
 Когда откроется динамика курса, скопировать в excel курс за последний текущий месяц. В excel шапка (A) Дата, (B) Курс, (C)Изменение. Повторить для Евро (EUR/RUB - Евро к российскому рублю), записать в ячейки (D), (E), (F) дату евро, курс, изменение. Для каждой строки полученного файла поделить курс евро на доллар и полученное значение записать в ячейку (G). Выровнять – автоширина. Формат чисел – финансовый. Проверить, чтобы автосумма в excel опознавала ячейки как числовой формат. Послать итоговый файл отчета себе на почту. В письме указать количество строк в excel в правильном склонении. Код выложите на GitHub, или архивом в облачное хранилище (Google Drive, Yandex Disk и т.д.) и пришлите ссылку.
 
-</p></details>
+</details>
