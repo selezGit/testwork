@@ -69,7 +69,7 @@ EMAIL_LOGIN = os.getenv('EMAIL_LOGIN')
 EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 
 # -----------------------------------------------------------
-# here you can specify the mail addresses 
+# here you can specify the mail addresses
 # to which you want to send a mailing
 # -----------------------------------------------------------
 
