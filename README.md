@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 <details><summary>Examples popular SMTP servers</summary><p>
 
-![Screenshot](https://shorturl.at/hwFNV)
+![Screenshot](https://downloader.disk.yandex.ru/preview/8a4182fbaa2c214746fe3b581fd4cae9888b3a7c8e658a6c35dbb163b1509263/6122ce05/db23Spm3HkJ3MgBGqJbouewKWSLkDmyN6s6u6KO97z0Zh4GEPKHnUWx0ai_yS21Zq7PTudSuO8P_lAXx6XvECQ%3D%3D?uid=0&filename=2021-08-22_21-08-10.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=2048x2048)
 </p></details>
 
 #### Run script:
